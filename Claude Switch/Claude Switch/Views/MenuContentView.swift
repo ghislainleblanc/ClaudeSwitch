@@ -24,10 +24,6 @@ struct MenuContentView: View {
                     assignmentButtons
                 }
             }
-
-            Divider()
-
-            footer
         }
         .padding(12)
         .frame(width: 320)
@@ -159,13 +155,6 @@ struct MenuContentView: View {
         .foregroundStyle(style)
     }
 
-    private var footer: some View {
-        Button("menu.quit") {
-            NSApp.terminate(nil)
-        }
-        .keyboardShortcut("q")
-        .disabled(viewModel.isBusy)
-    }
 }
 
 #Preview {
