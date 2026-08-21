@@ -5,7 +5,6 @@
 
 import Foundation
 import Observation
-import ServiceManagement
 
 @MainActor
 @Observable
@@ -16,7 +15,6 @@ final class SwitcherViewModel {
         case switched(Profile)
         case signInRequired(Profile)
         case sessionMismatch
-        case loginItemNeedsApproval
         case failure(String)
     }
 
@@ -24,7 +22,6 @@ final class SwitcherViewModel {
     private(set) var isBusy = false
     private(set) var status: Status?
     private(set) var snapshotDates: [Profile: Date] = [:]
-    private(set) var launchAtLogin = false
 
     var needsInitialSetup: Bool { activeProfile == nil }
 
@@ -43,20 +40,15 @@ final class SwitcherViewModel {
         if let rawValue = UserDefaults.standard.string(forKey: Self.activeProfileKey) {
             activeProfile = Profile(rawValue: rawValue)
         }
-        launchAtLogin = SMAppService.mainApp.status == .enabled
         Task {
             _ = await store.recoverInterruptedRestore()
             await refreshSnapshotDates()
         }
     }
 
-    /// Refreshes state that can change behind the app's back (login item
-    /// status, snapshots on disk). Called each time the menu opens.
+    /// Refreshes state that can change behind the app's back (snapshots on
+    /// disk). Called each time the menu opens.
     func refresh() async {
-        launchAtLogin = SMAppService.mainApp.status == .enabled
-        if status == .loginItemNeedsApproval && launchAtLogin {
-            status = nil
-        }
         await refreshSnapshotDates()
     }
 
@@ -106,24 +98,6 @@ final class SwitcherViewModel {
         }
         await refreshSnapshotDates()
         isBusy = false
-    }
-
-    func setLaunchAtLogin(_ enabled: Bool) {
-        cancelStatusDismissal()
-        do {
-            if enabled {
-                try SMAppService.mainApp.register()
-                if SMAppService.mainApp.status == .requiresApproval {
-                    status = .loginItemNeedsApproval
-                    SMAppService.openSystemSettingsLoginItems()
-                }
-            } else {
-                try SMAppService.mainApp.unregister()
-            }
-        } catch {
-            status = .failure(error.localizedDescription)
-        }
-        launchAtLogin = SMAppService.mainApp.status == .enabled
     }
 
     private func performSwitch(from currentProfile: Profile, to profile: Profile) async throws {

@@ -81,22 +81,6 @@
         }
       }
     },
-    "menu.launchAtLogin" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Launch at login"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ouvrir à l’ouverture de session"
-          }
-        }
-      }
-    },
     "menu.quit" : {
       "localizations" : {
         "en" : {
@@ -253,22 +237,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enregistrement de la session actuelle dans le profil %@…"
-          }
-        }
-      }
-    },
-    "status.loginItemNeedsApproval" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allow Claude Switch in System Settings › General › Login Items."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Autorisez Claude Switch dans Réglages Système › Général › Ouverture."
           }
         }
       }

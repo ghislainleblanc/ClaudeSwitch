@@ -40,7 +40,6 @@ Safety measures:
 - SwiftUI, MVVM (`Models` / `Services` / `ViewModels` / `Views`)
 - Menu bar only (`LSUIElement`, no Dock icon), window-style `MenuBarExtra`
 - Localized in English and French (String Catalog)
-- Optional launch at login (`SMAppService`)
 - App Sandbox is disabled: the app must read and write Claude Desktop's
   Application Support directory and quit/relaunch Claude Desktop.
 

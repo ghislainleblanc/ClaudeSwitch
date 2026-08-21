@@ -142,9 +142,6 @@ struct MenuContentView: View {
         case .sessionMismatch:
             statusLabel(String(localized: "status.sessionMismatch"),
                         systemImage: "questionmark.circle", style: .orange)
-        case .loginItemNeedsApproval:
-            statusLabel(String(localized: "status.loginItemNeedsApproval"),
-                        systemImage: "gearshape", style: .orange)
         case .failure(let message):
             statusLabel(String(format: String(localized: "status.failureFormat"), message),
                         systemImage: "exclamationmark.triangle", style: .red)
@@ -163,20 +160,11 @@ struct MenuContentView: View {
     }
 
     private var footer: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Toggle("menu.launchAtLogin", isOn: Binding(
-                get: { viewModel.launchAtLogin },
-                set: { viewModel.setLaunchAtLogin($0) }
-            ))
-            .toggleStyle(.checkbox)
-            .font(.callout)
-
-            Button("menu.quit") {
-                NSApp.terminate(nil)
-            }
-            .keyboardShortcut("q")
-            .disabled(viewModel.isBusy)
+        Button("menu.quit") {
+            NSApp.terminate(nil)
         }
+        .keyboardShortcut("q")
+        .disabled(viewModel.isBusy)
     }
 }
 
