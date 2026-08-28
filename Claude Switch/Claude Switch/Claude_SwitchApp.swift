@@ -114,8 +114,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         withObservationTracking {
             // Build the image before the optional-chain assignment: a failed
             // chain would skip the tracked property read and end the loop.
+            let configuration = NSImage.SymbolConfiguration(pointSize: 18, weight: .medium)
             let image = NSImage(systemSymbolName: viewModel.menuSymbolName,
-                                accessibilityDescription: String(localized: "app.name"))
+                                accessibilityDescription: String(localized: "app.name"))?
+                .withSymbolConfiguration(configuration)
             statusItem?.button?.image = image
         } onChange: { [weak self] in
             guard let self else { return }
