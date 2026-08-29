@@ -163,6 +163,14 @@ actor ProfileStore {
         try replaceLiveIdentity(withContentsOf: nil)
     }
 
+    /// Deletes a profile's saved snapshot. The live session is untouched, so
+    /// only call this for profiles that are not currently active.
+    func deleteSnapshot(for profile: Profile) throws {
+        let snapshot = snapshotDirectory(for: profile)
+        guard itemExists(at: snapshot) else { return }
+        try FileManager.default.removeItem(at: snapshot)
+    }
+
     /// Transactionally swaps the live identity items for the contents of
     /// `source` (or removes them when `source` is nil). Incoming files are
     /// fully staged first, so a read error or full disk aborts before the

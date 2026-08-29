@@ -15,6 +15,7 @@ final class SwitcherViewModel {
         case switched(Profile)
         case signInRequired(Profile)
         case sessionMismatch
+        case snapshotDeleted(Profile)
         case failure(String)
     }
 
@@ -93,6 +94,24 @@ final class SwitcherViewModel {
 
         do {
             try await performSwitch(from: currentProfile, to: profile)
+        } catch {
+            status = .failure(error.localizedDescription)
+        }
+        await refreshSnapshotDates()
+        isBusy = false
+    }
+
+    /// Deletes a profile's saved session. Only allowed for inactive profiles:
+    /// the active profile's session lives in Claude Desktop's own directory.
+    func deleteSnapshot(for profile: Profile) async {
+        guard !isBusy, profile != activeProfile else { return }
+        isBusy = true
+        cancelStatusDismissal()
+
+        do {
+            try await store.deleteSnapshot(for: profile)
+            status = .snapshotDeleted(profile)
+            scheduleStatusDismissal(after: .seconds(4))
         } catch {
             status = .failure(error.localizedDescription)
         }

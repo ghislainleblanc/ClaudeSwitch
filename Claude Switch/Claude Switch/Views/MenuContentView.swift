@@ -107,6 +107,16 @@ struct MenuContentView: View {
         .buttonStyle(.plain)
         .background(isActive ? AnyShapeStyle(.selection.opacity(0.15)) : AnyShapeStyle(.clear), in: .rect(cornerRadius: 6))
         .disabled(viewModel.isBusy || isActive)
+        .contextMenu {
+            if !isActive, viewModel.snapshotDates[profile] != nil {
+                Button(role: .destructive) {
+                    Task { await viewModel.deleteSnapshot(for: profile) }
+                } label: {
+                    Label("menu.deleteSnapshot", systemImage: "trash")
+                }
+                .disabled(viewModel.isBusy)
+            }
+        }
     }
 
     private func subtitle(for profile: Profile, isActive: Bool) -> String {
@@ -138,6 +148,9 @@ struct MenuContentView: View {
         case .sessionMismatch:
             statusLabel(String(localized: "status.sessionMismatch"),
                         systemImage: "questionmark.circle", style: .orange)
+        case .snapshotDeleted(let profile):
+            statusLabel(String(format: String(localized: "status.snapshotDeletedFormat"), profile.localizedName),
+                        systemImage: "trash", style: .secondary)
         case .failure(let message):
             statusLabel(String(format: String(localized: "status.failureFormat"), message),
                         systemImage: "exclamationmark.triangle", style: .red)

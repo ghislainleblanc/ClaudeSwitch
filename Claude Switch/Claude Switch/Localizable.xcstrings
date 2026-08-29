@@ -81,6 +81,22 @@
         }
       }
     },
+    "menu.deleteSnapshot" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Saved Session"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer la session enregistrée"
+          }
+        }
+      }
+    },
     "menu.quit" : {
       "localizations" : {
         "en" : {
@@ -269,6 +285,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connectez-vous à votre compte %@ dans Claude Desktop."
+          }
+        }
+      }
+    },
+    "status.snapshotDeletedFormat" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved session for %@ deleted"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session enregistrée du profil %@ supprimée"
           }
         }
       }
