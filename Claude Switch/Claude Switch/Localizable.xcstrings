@@ -81,6 +81,22 @@
         }
       }
     },
+    "menu.about" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About Claude Switch"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À propos de Claude Switch"
+          }
+        }
+      }
+    },
     "menu.deleteSnapshot" : {
       "localizations" : {
         "en" : {

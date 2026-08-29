@@ -90,6 +90,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
         let menu = NSMenu()
         menu.autoenablesItems = false
+
+        let aboutItem = NSMenuItem(title: String(localized: "menu.about"),
+                                   action: #selector(showAbout),
+                                   keyEquivalent: "")
+        aboutItem.target = self
+        menu.addItem(aboutItem)
+        menu.addItem(.separator())
+
         let quitItem = NSMenuItem(title: String(localized: "menu.quit"),
                                   action: #selector(quit),
                                   keyEquivalent: "q")
@@ -102,6 +110,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         statusItem.menu = menu
         statusItem.button?.performClick(nil)
         statusItem.menu = nil
+    }
+
+    /// Shows the standard About panel (app icon, version, and build number).
+    /// The app must be activated first or the panel stays behind other apps.
+    @objc private func showAbout() {
+        NSApp.activate()
+        NSApp.orderFrontStandardAboutPanel(nil)
     }
 
     @objc private func quit() {
